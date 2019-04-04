@@ -9,11 +9,23 @@ You can use any base code for this assignment, so we haven't provided
 anything specific for you. We have included the paper [Real-time Procedural Generation of 'Pseudo Infinite' Cities](procedural_infinite_cities.pdf) for your reference. For visual inspiration, you might refer to Emily's [City Forgery](http://www.emilyhvo.com/city-forgery/) project.
 
 ## Assignment Requirements
-- __(5 points)__ Based on the code you wrote for the previous assignment, create a 3D model of your terrain. You might consider using the subdivided plane we provided with homework 1. Since the road generation assignment was entirely 2D, your terrain need not have changes in elevation, since that would alter the placement of roads and buildings. The only elevation changes we require are having the water exist at a lower elevation than the land, with a small slope between the two.
+#### 3D MODEL OF TERRAIN
+This 3D model was generated based on the image of the previous homework map.  I incorporated a subdivided plane which I modified with Maya, to give some landscaping around the edges as opposed to totally flat terrain. 
+#### ROADS
+For the road segments, I used a rectangular prism OBJ file similar to how I used plant leaf OBJ files for homework 4.   Having built the plane off of an instance of running the previous homework, I stored one set of edges so that the roads are consistent each time the program is run.
 
-- __(5 points)__ Using whatever visual representation you wish, draw your roads on top of your terrain model. For the simplest representation, use instanced rendering to draw rectangular prisms slightly above the ground.
-- __(10 points)__ On the CPU, create a high-resolution 2D grid that spans your entire scene. "Rasterize" every road in this grid with an adjustable line thickness to demarcate areas where buildings cannot be placed. Do the same with any water in your terrain. This grid will be used in the next section to determine valid locations for buildings.
-- __(10 points)__ Generate a collection of randomly scattered 2D points in your building placement validity grid, removing any points that fall within cells already occupied by roads or water. At each of these points, you will place a building generated based on the specifications in the next section.
+![](city.PNG)
+
+#### 2D GRID
+On the CPU, I created a high-resolution 2D grid that spans the terrain for the scene. The points where the road and water exist are stored as invalid areas, where a building will not be placed if the user tries to put a building there randomly.  I was able to visualize this 2D grid by using a checkered shader as a guide for building placement.  Below, you can visualize the initial grid setup with several buildings placed in the scene.
+![](grid.PNG)
+
+#### RANDOM POINTS
+I treated the "city" and "towns" as separate entities due to their different types of buildings.
+For the towns, I randomly generated points along the x and z axis.  If this point fell too close to the x or y of any of the city block roads, this point was discarded, and another new random point was tried.  For the most part, you will find that the smaller buildings effectively appear in valid terrain space. 
+With more time, I would hope to improve my intersection testing to ensure no buildings ever cross the roads, but there is occasional overlap due to random width and length of the building bases.
+
+Generate a collection of randomly scattered 2D points in your building placement validity grid, removing any points that fall within cells already occupied by roads or water. At each of these points, you will place a building generated based on the specifications in the next section.
 - __(20 points)__ To create building geometry, you will follow the method illustrated in figure 3 of [Real-time Procedural Generation of 'Pseudo Infinite' Cities](procedural_infinite_cities.pdf). Beginning at a predetermined top height, generate some n-sided polygon and extrude it downward a certain distance. After creating this first layer, create an additional layer beneath it that has the form of two polygons combined together and extruded downward. Repeat until your building has reached the ground. You will be creating the structure of these buildings as VBO data on the CPU.
 - __(25 points)__ Once you have the basics of building generation working, you will need to refine your algorithm to create art-directed procedural buildings. Your city should contain buildings that follow these guidelines:
   - Buildings in your city should not be uniform in appearance. The higher the city's population density, the more the buildings should resemble skyscrapers. In areas of lower density, the buildings should be shorter and look more residential. Think office buildings versus row homes. Areas of medium population should contain buildings that are of medium height and which look more like multi-story offices or shops. Don't feel constrained by the building generation algorithm from the previous section; add slanted roofs and other features to your buildings if you wish.
