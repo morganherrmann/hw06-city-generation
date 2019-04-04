@@ -29,9 +29,8 @@ With more time, I would hope to improve my intersection testing to ensure no bui
 
 For the city portion, I generated random points within a certain x/z range and also randomized the height at which the buildings would reach.  In terms of art direction, I purposelly correlated the height of the skyscrapers with the -Z direction.  In terms of a visually appealing city, I felt it would look more natural to have larger, taller buildings occur with an increased frequency towards the back of the scene.  I wanted to prevent massive buildings blocking smaller ones from view in the back.
 
-In order to generate the randomized height, I used a cubic function that took into account random values, as well as the proposed Z coordinate for the new building.  Buildings at a greater distance from the camera had a greater probability of being taller.
-
-Generate a collection of randomly scattered 2D points in your building placement validity grid, removing any points that fall within cells already occupied by roads or water. At each of these points, you will place a building generated based on the specifications in the next section.
+In order to generate the randomized height, I used a cubic function that took into account random values, as well as the proposed Z coordinate for the new building.  Buildings at a greater distance from the camera had a greater probability of being taller. 
+The cubic function results in medium/smaller buildings at the start of the city, and more "skyscrapers" in the distance.
 
 Below, you will see the pseudorandom nature of the city, with height influence that favors taller structures further away.
 ![](sky1.PNG)
