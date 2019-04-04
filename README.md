@@ -20,14 +20,23 @@ For the road segments, I used a rectangular prism OBJ file similar to how I used
 On the CPU, I created a high-resolution 2D grid that spans the terrain for the scene. The points where the road and water exist are stored as invalid areas, where a building will not be placed if the user tries to put a building there randomly.  I was able to visualize this 2D grid by using a checkered shader as a guide for building placement.  Below, you can visualize the initial grid setup with several buildings placed in the scene.
 ![](grid.PNG)
 
-#### RANDOM POINTS
+#### RANDOM POINTS ON THE GRID
 I treated the "city" and "towns" as separate entities due to their different types of buildings.
 For the towns, I randomly generated points along the x and z axis.  If this point fell too close to the x or y of any of the city block roads, this point was discarded, and another new random point was tried.  For the most part, you will find that the smaller buildings effectively appear in valid terrain space. 
 With more time, I would hope to improve my intersection testing to ensure no buildings ever cross the roads, but there is occasional overlap due to random width and length of the building bases.
 
 ![](town.PNG)
 
+For the city portion, I generated random points within a certain x/z range and also randomized the height at which the buildings would reach.  In terms of art direction, I purposelly correlated the height of the skyscrapers with the -Z direction.  In terms of a visually appealing city, I felt it would look more natural to have larger, taller buildings occur with an increased frequency towards the back of the scene.  I wanted to prevent massive buildings blocking smaller ones from view in the back.
+
+In order to generate the randomized height, I used a cubic function that took into account random values, as well as the proposed Z coordinate for the new building.  Buildings at a greater distance from the camera had a greater probability of being taller.
+
 Generate a collection of randomly scattered 2D points in your building placement validity grid, removing any points that fall within cells already occupied by roads or water. At each of these points, you will place a building generated based on the specifications in the next section.
+
+Below, you will see the pseudorandom nature of the city, with height influence that favors taller structures further away.
+![](sky1.PNG)
+![](sky2.PNG)
+
 - __(20 points)__ To create building geometry, you will follow the method illustrated in figure 3 of [Real-time Procedural Generation of 'Pseudo Infinite' Cities](procedural_infinite_cities.pdf). Beginning at a predetermined top height, generate some n-sided polygon and extrude it downward a certain distance. After creating this first layer, create an additional layer beneath it that has the form of two polygons combined together and extruded downward. Repeat until your building has reached the ground. You will be creating the structure of these buildings as VBO data on the CPU.
 - __(25 points)__ Once you have the basics of building generation working, you will need to refine your algorithm to create art-directed procedural buildings. Your city should contain buildings that follow these guidelines:
   - Buildings in your city should not be uniform in appearance. The higher the city's population density, the more the buildings should resemble skyscrapers. In areas of lower density, the buildings should be shorter and look more residential. Think office buildings versus row homes. Areas of medium population should contain buildings that are of medium height and which look more like multi-story offices or shops. Don't feel constrained by the building generation algorithm from the previous section; add slanted roofs and other features to your buildings if you wish.
