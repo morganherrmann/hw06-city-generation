@@ -57,8 +57,20 @@ Follows the same procedure as Type 2, but adds a third tier underneath with a mu
 Town/Home buildings are primarily type 1, while skyscrapers and medium buildings are more likely to be of types 2 and 3.
 
 
-- __(25 points)__ Once you have the basics of building generation working, you will need to refine your algorithm to create art-directed procedural buildings. Your city should contain buildings that follow these guidelines:
-  - Buildings in your city should not be uniform in appearance. The higher the city's population density, the more the buildings should resemble skyscrapers. In areas of lower density, the buildings should be shorter and look more residential. Think office buildings versus row homes. Areas of medium population should contain buildings that are of medium height and which look more like multi-story offices or shops. Don't feel constrained by the building generation algorithm from the previous section; add slanted roofs and other features to your buildings if you wish.
+#### ART DIRECTION - STRUCTURE AND HEIGHT
+
+As mentioned above, I created both town and city classes, where cities have much higher population as opposed to small towns. As a result of this, towns are much more likely to have buildings of type 1, possibly 2, but city buildings are more likely to be taller and tiered. (type 3)
+As previously mentioned, I directed the city region to have increasing population with increasing distance from the cameras position. This influences the city to be more visually appealing, with taller buildings appearing more frequently in the back.
+
+This results in the residential structure within the towns, and skyscrapers within the city area.
+
+#### ART DIRECTION - SHADERS!
+
+I created several fragment shaders to color the buildings.
+In order to create a window pattern, I modified a checkerboard glsl shader - https://www.geeks3d.com/hacklab/20190225/demo-checkerboard-in-glsl/ . Wherever the windows (white) occurr, I compute the result of another colored shader to fill the windows with electric/cyberpunky colors.
+
+I modified the windows randomly on different buildings, so that some have stripes, and others have traditional square windows.
+
   - The texturing of your buildings should be procedurally generated within a shader. Use all of the techniques you practiced in the first three homework assignments to polish your buildings' appearances. The overall aesthetic of your city is up to you (e.g. cyberpunk versus modern versus renaissance) but the procedural texturing should look intentional. Include windows, doors, lights, and other details you deem necessary to make your buildings look natural.
 - __(10 points)__ Make use of artistic lighting as we discussed during the environmental setpiece assignment. You should include several directional lights, as discussed in [IQ's article on artistic lighting](http://iquilezles.org/www/articles/outdoorslighting/outdoorslighting.htm), to ensure your scene has adequate illumination. There should never be any purely black shadows in your scene.
 - __(5 points)__ Your scene should include a procedural sky background as so many of your other assignments have. Make sure it is congruent with your lighting setup and the aesthetics of your city.
