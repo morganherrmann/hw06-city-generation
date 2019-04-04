@@ -38,13 +38,17 @@ Below, you will see the pseudorandom nature of the city, with height influence t
 
 #### CREATING BUILDING GEOMETRY - ALGORITHM
 !! Allow me to explain my awesome building generation method.
-To start, I modified a CUBE VBO geometry class to accept input, and generate geometry for any input --> starting X, Y, Z, and length, width and height.
+
+To start, I modified a SQUARE VBO geometry class to accept input, and generate geometry for any input --> starting X, Y, Z, and extrusion properties -> like length, width and height.
 Feeding in any data to this class will produce geometry with the desired output. We can refer to this as a "BLOCK".
 
 - Creating a Building
-Each building is made up of one or more BLOCKS. Given some random Y start point and a height for this start block, the shape is extruded downwards by the given height.  If the building has not yet reached y = 0.0, we extrude once more.  The next tier is computed by setting the new start height to the bottom of the first block.  We then add two more blocks with a slight random x/z offset, and extrude those downwards as well.  This process repeats until we reach the ground level. Note that once we get within a certain threshhold of the ground, the extrusion will simply extend to 0.0 as opposed to branching again.
+Each building is made up of one or more BLOCKS. Given some random Y start point and a height for this start block, the shape is extruded downwards by the given height.  If the building has not yet reached y = 0.0, we extrude once more.  The next tier is computed by setting the new start height to the bottom of the first block.  We then add two more blocks with a slight random x/z offset, and extrude those downwards as well. The result of the offset produces some irregular, n-sided polygon.
+This process repeats until we reach the ground level.
 
-Each building, therefore is composed of an array of BLOCKS.  We draw all of these blocks in order to visualize the building.
+Once we get within a certain threshhold of the ground, the extrusion will simply extend to 0.0 as opposed to branching again. For example, if the next extrusion takes us to a height of 0.5 above ground, the block will continue extruding itself to 0.
+
+Each building, therefore is composed of an array of BLOCKS.  We draw all of these blocks to visualize the building.
 I also allowed for specific types of buildings, explained below:
 
 ##### Type 1:
@@ -60,7 +64,7 @@ Town/Home buildings are primarily type 1, while skyscrapers and medium buildings
 #### ART DIRECTION - STRUCTURE AND HEIGHT
 
 As mentioned above, I created both town and city classes, where cities have much higher population as opposed to small towns. As a result of this, towns are much more likely to have buildings of type 1, possibly 2, but city buildings are more likely to be taller and tiered. (type 3)
-As previously mentioned, I directed the city region to have increasing population with increasing distance from the cameras position. This influences the city to be more visually appealing, with taller buildings appearing more frequently in the back.
+As previously mentioned, I directed the city region to have increasing population with increasing distance from the cameras position. This influences the city to be more visually appealing, with more taller buildings appearing in the back of the landscape.
 
 This results in the residential structure within the towns, and skyscrapers within the city area.
 
@@ -69,10 +73,11 @@ This results in the residential structure within the towns, and skyscrapers with
 I created several fragment shaders to color the buildings.
 In order to create a window pattern, I modified a checkerboard glsl shader - https://www.geeks3d.com/hacklab/20190225/demo-checkerboard-in-glsl/ . Wherever the windows (white) occurr, I compute the result of another colored shader to fill the windows with electric/cyberpunky colors.
 
-I modified the windows randomly on different buildings, so that some have stripes, and others have traditional square windows.
+I modified the windows randomly on different buildings, so that some have long floor/ceiling window stripes, and others have traditional square windows.
 
-  - The texturing of your buildings should be procedurally generated within a shader. Use all of the techniques you practiced in the first three homework assignments to polish your buildings' appearances. The overall aesthetic of your city is up to you (e.g. cyberpunk versus modern versus renaissance) but the procedural texturing should look intentional. Include windows, doors, lights, and other details you deem necessary to make your buildings look natural.
-- __(10 points)__ Make use of artistic lighting as we discussed during the environmental setpiece assignment. You should include several directional lights, as discussed in [IQ's article on artistic lighting](http://iquilezles.org/www/articles/outdoorslighting/outdoorslighting.htm), to ensure your scene has adequate illumination. There should never be any purely black shadows in your scene.
+
+#### LIGHTING
+I used lambert shaders from several different directions, averaging them together to make the shading flicker like an ocean floor. This creates some shadowlike appearance on both the terrain floor and the buildings! As a result, there Make use of artistic lighting as we discussed during the environmental setpiece assignment. You should include several directional lights, as discussed in [IQ's article on artistic lighting](http://iquilezles.org/www/articles/outdoorslighting/outdoorslighting.htm), to ensure your scene has adequate illumination. There should never be any purely black shadows in your scene.
 - __(5 points)__ Your scene should include a procedural sky background as so many of your other assignments have. Make sure it is congruent with your lighting setup and the aesthetics of your city.
 - __(10 points)__ Following the specifications listed
 [here](https://github.com/pjcozzi/Articles/blob/master/CIS565/GitHubRepo/README.md),
