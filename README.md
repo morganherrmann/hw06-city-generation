@@ -27,7 +27,7 @@ With more time, I would hope to improve my intersection testing to ensure no bui
 
 ![](town.PNG)
 
-For the city portion, I generated random points within a certain x/z range and also randomized the height at which the buildings would reach.  In terms of art direction, I purposelly correlated the height of the skyscrapers with the -Z direction.  In terms of a visually appealing city, I felt it would look more natural to have larger, taller buildings occur with an increased frequency towards the back of the scene.  I wanted to prevent massive buildings blocking smaller ones from view in the back.
+For the city portion, I generated random points within a certain x/z range and also randomized the height at which the buildings would reach.  In terms of art direction, I purposelly correlated the height of the skyscrapers with the -Z direction.  In terms of a visually appealing city, I felt it would look more natural to have larger, taller buildings occur with an increased frequency towards the back of the scene.  The goal was preventing massive buildings blocking smaller ones from view in the back.
 
 In order to generate the randomized height, I used a cubic function that took into account random values, as well as the proposed Z coordinate for the new building.  Buildings at a greater distance from the camera had a greater probability of being taller. 
 The cubic function results in medium/smaller buildings at the start of the city, and more "skyscrapers" in the distance.
@@ -36,7 +36,27 @@ Below, you will see the pseudorandom nature of the city, with height influence t
 ![](sky1.PNG)
 ![](sky2.PNG)
 
-- __(20 points)__ To create building geometry, you will follow the method illustrated in figure 3 of [Real-time Procedural Generation of 'Pseudo Infinite' Cities](procedural_infinite_cities.pdf). Beginning at a predetermined top height, generate some n-sided polygon and extrude it downward a certain distance. After creating this first layer, create an additional layer beneath it that has the form of two polygons combined together and extruded downward. Repeat until your building has reached the ground. You will be creating the structure of these buildings as VBO data on the CPU.
+#### CREATING BUILDING GEOMETRY - ALGORITHM
+!! Allow me to explain my awesome building generation method.
+To start, I modified a CUBE VBO geometry class to accept input, and generate geometry for any input --> starting X, Y, Z, and length, width and height.
+Feeding in any data to this class will produce geometry with the desired output. We can refer to this as a "BLOCK".
+
+- Creating a Building
+Each building is made up of one or more BLOCKS. Given some random Y start point and a height for this start block, the shape is extruded downwards by the given height.  If the building has not yet reached y = 0.0, we extrude once more.  The next tier is computed by setting the new start height to the bottom of the first block.  We then add two more blocks with a slight random x/z offset, and extrude those downwards as well.  This process repeats until we reach the ground level. Note that once we get within a certain threshhold of the ground, the extrusion will simply extend to 0.0 as opposed to branching again.
+
+Each building, therefore is composed of an array of BLOCKS.  We draw all of these blocks in order to visualize the building.
+I also allowed for specific types of buildings, explained below:
+
+##### Type 1:
+Given a start height, draw one block straight to the ground.  This is the structure of a simple, straight building.
+##### Type 2:
+Given a start height, draw one block to some distance still above ground. The next tier is composed of two additional blocks, which are then both extended to the ground.
+##### Type 3:
+Follows the same procedure as Type 2, but adds a third tier underneath with a much wider base composed of 2 MORE blocks that reaches the ground.
+
+Town/Home buildings are primarily type 1, while skyscrapers and medium buildings are more likely to be of types 2 and 3.
+
+
 - __(25 points)__ Once you have the basics of building generation working, you will need to refine your algorithm to create art-directed procedural buildings. Your city should contain buildings that follow these guidelines:
   - Buildings in your city should not be uniform in appearance. The higher the city's population density, the more the buildings should resemble skyscrapers. In areas of lower density, the buildings should be shorter and look more residential. Think office buildings versus row homes. Areas of medium population should contain buildings that are of medium height and which look more like multi-story offices or shops. Don't feel constrained by the building generation algorithm from the previous section; add slanted roofs and other features to your buildings if you wish.
   - The texturing of your buildings should be procedurally generated within a shader. Use all of the techniques you practiced in the first three homework assignments to polish your buildings' appearances. The overall aesthetic of your city is up to you (e.g. cyberpunk versus modern versus renaissance) but the procedural texturing should look intentional. Include windows, doors, lights, and other details you deem necessary to make your buildings look natural.
