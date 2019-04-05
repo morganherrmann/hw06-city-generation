@@ -1,4 +1,4 @@
-# Homework 6: City Generation
+# Homework 6: City Generation :)
 
 For this assignment, you will generate a collection of 3D buildings within the road networks you created for the previous assignment.
 
