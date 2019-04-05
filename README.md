@@ -1,5 +1,10 @@
 # Homework 6: City Generation
 
+
+##### Live Demo - https://morganherrmann.github.io/hw06-city-generation/
+
+Morgan Herrmann - Moher@seas.upenn.edu
+
 For this assignment, you will generate a collection of 3D buildings within the road networks you created for the previous assignment.
 
 For this assignment, you will generate a network of roads to form the basis of a city using a modified version of L-systems. As in homework 4, you will be using instanced rendering to draw your road networks.
