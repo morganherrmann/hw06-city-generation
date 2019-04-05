@@ -77,28 +77,9 @@ I modified the windows randomly on different buildings, so that some have long f
 
 
 #### LIGHTING
-I used lambert shaders from several different directions, averaging them together to make the shading flicker like an ocean floor. This creates some shadowlike appearance on both the terrain floor and the buildings! As a result, there Make use of artistic lighting as we discussed during the environmental setpiece assignment. You should include several directional lights, as discussed in [IQ's article on artistic lighting](http://iquilezles.org/www/articles/outdoorslighting/outdoorslighting.htm), to ensure your scene has adequate illumination. There should never be any purely black shadows in your scene.
-- __(5 points)__ Your scene should include a procedural sky background as so many of your other assignments have. Make sure it is congruent with your lighting setup and the aesthetics of your city.
-- __(10 points)__ Following the specifications listed
-[here](https://github.com/pjcozzi/Articles/blob/master/CIS565/GitHubRepo/README.md),
-create your own README.md, renaming the file you are presently reading to
-INSTRUCTIONS.md. Don't worry about discussing runtime optimization for this
-project. Make sure your README contains the following information:
-    - Your name and PennKey
-    - Citation of any external resources you found helpful when implementing this
-    assignment.
-    - A link to your live github.io demo (refer to the pinned Piazza post on
-      how to make a live demo through github.io)
-    - An explanation of the techniques you used to generate your L-System features.
-    Please be as detailed as you can; not only will this help you explain your work
-    to recruiters, but it helps us understand your project when we grade it!
+I used lambert shaders from several different directions, averaging them together to make the shading flicker like an ocean floor. This creates some shadowlike appearance on both the terrain floor and the buildings! As a result, there are no total dark shadows in the scene. 
 
+#### PROCEDURAL BACKGROUND
+For my background, I worked with the following shader as a basis for noise - http://glslsandbox.com/e#22429.6
+I then turned it into a green, wavelike motion to go with the city's style.
 
-## Extra Credit (Up to 20 points)
-- If you did not do so for the previous assignment, implement additional road layouts as described in Procedural Modeling of Cities
-  - Radial road networking: The main roads follow radial tracks around some predefined centerpoint
-  - Elevation road networking: Roads follow paths of least elevation change
-- Use shape grammars to further refine the structure of your buildings
-- Create fully 3D terrain and adjust the placement of your buildings and roads based on the slope of your terrain.
-- In the vein of Emily's procedural city, use the BioCrowds algorithm to create agents that seek some goal point by navigating the terrain covered by roads. 
-- Add any polish features you'd like to make your visual output more interesting
